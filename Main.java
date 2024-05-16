@@ -2,94 +2,97 @@ import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
-        //objecten aanmaken voor verwerking van input etc.
         Scanner sc = new Scanner(System.in);
-        //initialiseer wasprogramma's
         InitialiseerContent();
-        //start invoer binnen een while zodat de volgende gebruiker kan wanneer huidige gebruiker klaar is.
         while (true) {
-            String invoer = "";
-            while (!invoer.equalsIgnoreCase("J") && !invoer.equalsIgnoreCase("N")) {
-                System.out.println("Wil je nieuwe was starten? (J/N)");
-                invoer = sc.nextLine();
-            }
-            if (invoer.equalsIgnoreCase("J")) {
-                Bon x = StartInvoer(sc);
+            String keuze = vraagNieuweWas(sc);
+            if (keuze.equalsIgnoreCase("J")) {
+                startNieuweWas(sc);
             } else {
+                System.out.println("Huidige bonnen:");
                 Bon.printHuidigeBonnen();
             }
         }
     }
-    private static Bon StartInvoer(Scanner sc){
-        String invoer;
-        invoer = "";
+
+    private static String vraagNieuweWas(Scanner sc) {
+        String invoer = "";
         while (!invoer.equalsIgnoreCase("J") && !invoer.equalsIgnoreCase("N")) {
-            System.out.println(tekst("Welkom"));
+            System.out.println("Wil je een nieuwe was starten? (J/N)");
             invoer = sc.nextLine();
         }
-        if (invoer.equalsIgnoreCase("J")) {
-            System.out.println(tekst("NietNieuw"));
-        } else {
-            System.out.println(tekst("WelNieuw"));
-            System.out.println(tekst("UitlegNieuw")+ "\n" + tekst("UitlegNieuw2"));
+        return invoer;
+    }
+
+    private static void startNieuweWas(Scanner sc) {
+        Bon bon = verwerkNieuweWas(sc);
+        if (bon != null) {
+            System.out.println("Uw was is gestart. Boncode: " + bon.getBonCode());
         }
-        invoer = "";
+    }
+
+    private static Bon verwerkNieuweWas(Scanner sc) {
+        String invoer = "";
         while (!invoer.equalsIgnoreCase("J") && !invoer.equalsIgnoreCase("N")) {
-            System.out.println(tekst("WasmiddelVraag1")+"\n"+tekst("WasmiddelVraag2"));
+            System.out.println("Welkom bij het wasprogramma. Wil je je eigen wasmiddel gebruiken? (J/N)");
             invoer = sc.nextLine();
         }
+
         if (invoer.equalsIgnoreCase("J")) {
-            System.out.println(tekst("JaEigenWasmiddel"));
-            Wasmachine bescikbareWasmachine = Wasmachine.CheckBeschikbaarheid(false,false,true);
-            if (bescikbareWasmachine != null) {
-                System.out.println(tekst("wasmachineBescikbaar") + bescikbareWasmachine.getLocatie());
-                Wasprogramma gekozenWasprogramma = invoerWasprogramma(sc, bescikbareWasmachine);
-                return bescikbareWasmachine.startWasmachine(gekozenWasprogramma);
+            System.out.println("Bedankt voor het gebruiken van je eigen wasmiddel.");
+            Wasmachine beschikbareWasmachine = Wasmachine.CheckBeschikbaarheid(false, false, true);
+            if (beschikbareWasmachine != null) {
+                System.out.println("Een wasmachine is beschikbaar op locatie: " + beschikbareWasmachine.getLocatie());
+                Wasprogramma gekozenWasprogramma = invoerWasprogramma(sc, beschikbareWasmachine);
+                return beschikbareWasmachine.startWasmachine(gekozenWasprogramma);
             }
         } else {
             invoer = "";
             while (!invoer.equalsIgnoreCase("J") && !invoer.equalsIgnoreCase("N")) {
-                System.out.println(tekst("DrogerVraag"));
+                System.out.println("Wil je de droger gebruiken? (J/N)");
                 invoer = sc.nextLine();
             }
+
             if (invoer.equalsIgnoreCase("J")) {
-                System.out.println(tekst("JaDroger"));
-                Wasmachine bescikbareWasmachine = Wasmachine.CheckBeschikbaarheid(true, false, false);
-                if (bescikbareWasmachine != null) {
-                    System.out.println(tekst("wasmachineBescikbaar") + bescikbareWasmachine.getLocatie());
-                    Wasprogramma gekozenWasprogramma = invoerWasprogramma(sc, bescikbareWasmachine);
-                    return bescikbareWasmachine.startWasmachine(gekozenWasprogramma);
+                System.out.println("Bedankt voor het gebruik van de droger.");
+                Wasmachine beschikbareWasmachine = Wasmachine.CheckBeschikbaarheid(true, false, false);
+                if (beschikbareWasmachine != null) {
+                    System.out.println("Een wasmachine is beschikbaar op locatie: " + beschikbareWasmachine.getLocatie());
+                    Wasprogramma gekozenWasprogramma = invoerWasprogramma(sc, beschikbareWasmachine);
+                    return beschikbareWasmachine.startWasmachine(gekozenWasprogramma);
                 }
             } else {
                 invoer = "";
                 while (!invoer.equalsIgnoreCase("A") && !invoer.equalsIgnoreCase("B") && !invoer.equalsIgnoreCase("C")) {
-                    System.out.println(tekst("KiloWasVraag"));
+                    System.out.println("Hoeveel kilo was wil je wassen? (A/B/C)");
                     invoer = sc.nextLine();
                 }
+
                 if (invoer.equalsIgnoreCase("A")) {
-                    System.out.println(tekst("5KiloWas"));
-                    Wasmachine bescikbareWasmachine = Wasmachine.CheckBeschikbaarheid(true, true, true);
-                    if (bescikbareWasmachine != null) {
-                        return bescikbareWasmachine.startWasmachine(invoerWasprogramma(sc, bescikbareWasmachine));
+                    System.out.println("Bedankt voor het wassen van 5 kilo was.");
+                    Wasmachine beschikbareWasmachine = Wasmachine.CheckBeschikbaarheid(true, true, true);
+                    if (beschikbareWasmachine != null) {
+                        return beschikbareWasmachine.startWasmachine(invoerWasprogramma(sc, beschikbareWasmachine));
                     }
                 } else if (invoer.equalsIgnoreCase("B")) {
-                    System.out.println(tekst("8KiloWas"));
-                    Wasmachine bescikbareWasmachine = Wasmachine.CheckBeschikbaarheid(true, true, false);
-                    if (bescikbareWasmachine != null) {
-                        Wasprogramma gekozenWasprogramma = invoerWasprogramma(sc, bescikbareWasmachine);
-                        return bescikbareWasmachine.startWasmachine(gekozenWasprogramma);
+                    System.out.println("Bedankt voor het wassen van 8 kilo was.");
+                    Wasmachine beschikbareWasmachine = Wasmachine.CheckBeschikbaarheid(true, true, false);
+                    if (beschikbareWasmachine != null) {
+                        Wasprogramma gekozenWasprogramma = invoerWasprogramma(sc, beschikbareWasmachine);
+                        return beschikbareWasmachine.startWasmachine(gekozenWasprogramma);
                     }
                 } else {
-                    System.out.println(tekst("20KiloWas"));
-                    Wasmachine bescikbareWasmachine = Wasmachine.CheckBeschikbaarheid(false, true, false);
-                    if (bescikbareWasmachine != null) {
-                        Wasprogramma gekozenWasprogramma = invoerWasprogramma(sc, bescikbareWasmachine);
-                        return bescikbareWasmachine.startWasmachine(gekozenWasprogramma);
+                    System.out.println("Bedankt voor het wassen van 20 kilo was.");
+                    Wasmachine beschikbareWasmachine = Wasmachine.CheckBeschikbaarheid(false, true, false);
+                    if (beschikbareWasmachine != null) {
+                        Wasprogramma gekozenWasprogramma = invoerWasprogramma(sc, beschikbareWasmachine);
+                        return beschikbareWasmachine.startWasmachine(gekozenWasprogramma);
                     }
                 }
             }
         }
-        System.out.println(tekst("geenWasmachineBescikbaar"));
+
+        System.out.println("Geen wasmachine beschikbaar op dit moment.");
         return null;
     }
     private static Wasprogramma invoerWasprogramma(Scanner sc, Wasmachine wasmachine) {
