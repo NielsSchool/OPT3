@@ -1,30 +1,28 @@
+import java.util.List;
+
 public class Wasprogramma {
     private int aantalMinuten;
-    private boolean heeftDrogerNodig;
-    private boolean moetInIndustrieleMachine;
-    private boolean mogelijkheidEigenWasmiddel;
+    private List<Boolean> opties;
     private String naam;
     private String omschrijving;
 
-    public Wasprogramma(int aantalMinuten, boolean heeftDrogerNodig, boolean moetInIndustrieleMachine, boolean mogelijkheidEigenWasmiddel, String naam, String omschrijving) {
+    public Wasprogramma(int aantalMinuten, List<Boolean> opties, String naam, String omschrijving) {
         this.aantalMinuten = aantalMinuten;
-        this.heeftDrogerNodig = heeftDrogerNodig;
-        this.moetInIndustrieleMachine = moetInIndustrieleMachine;
-        this.mogelijkheidEigenWasmiddel = mogelijkheidEigenWasmiddel;
         this.naam = naam;
         this.omschrijving = omschrijving;
+        this.opties = opties;
     }
 
     public boolean isHeeftDrogerNodig() {
-        return heeftDrogerNodig;
+        return opties.get(0);
     }
 
     public boolean isMoetInIndustrieleMachine() {
-        return moetInIndustrieleMachine;
+        return opties.get(1);
     }
 
     public boolean isMogelijkheidEigenWasmiddel() {
-        return mogelijkheidEigenWasmiddel;
+        return opties.get(2);
     }
 
     public int getAantalMinuten() {

@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Wasmachine implements IWasmachineService {
     private int nr;
@@ -26,12 +27,12 @@ public class Wasmachine implements IWasmachineService {
     public String getLocatie() {
         return locatie;
     }
-    public static Wasmachine CheckBeschikbaarheid(boolean heeftDrogerNodig, boolean moetIndustrieleMachine, boolean mogelijkheidEigenWasmiddel) {
+    public static Wasmachine CheckBeschikbaarheid(List<Boolean> opties) {
         Wasmachine wasmachineBeschikbaar = null;
         for (Wasmachine wasmachine:Wasmachine.Wasmachines) {
             if(wasmachine.getBeschikbaar()) {
                 for (Wasprogramma wasprogramma:wasmachine.getWasprogrammas()) {
-                    if(wasprogramma.isHeeftDrogerNodig() == heeftDrogerNodig && wasprogramma.isMoetInIndustrieleMachine() == moetIndustrieleMachine && wasprogramma.isMogelijkheidEigenWasmiddel() == mogelijkheidEigenWasmiddel) {
+                    if(wasprogramma.isHeeftDrogerNodig() == opties.get(0) && wasprogramma.isMoetInIndustrieleMachine() == opties.get(1) && wasprogramma.isMogelijkheidEigenWasmiddel() == opties.get(2)) {
                         wasmachineBeschikbaar = wasmachine;
                     }
                     //else if (wasprogramma.isHeeftDrogerNodig() || heeftDrogerNodig || wasprogramma.isMoetInIndustrieleMachine() || moetIndustrieleMachine || wasprogramma.isMogelijkheidEigenWasmiddel() || mogelijkheidEigenWasmiddel) {
