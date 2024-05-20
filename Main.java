@@ -11,7 +11,7 @@ public class Main {
             if (keuze.equalsIgnoreCase("J")) {
                 startNieuweWas(gebruiker);
             } else {
-                System.out.println("Huidige bonnen:");
+                print("Huidige bonnen:");
                 Bon.printHuidigeBonnen();
             }
         }
@@ -20,7 +20,7 @@ public class Main {
     private static void startNieuweWas(Gebruiker gebruiker) {
         Bon bon = verwerkNieuweWas(gebruiker);
         if (bon != null) {
-            System.out.println("Uw was is gestart. Boncode: " + bon.getBonCode());
+            print("Uw was is gestart. Boncode: " + bon.getBonCode());
         }
     }
 
@@ -51,13 +51,17 @@ public class Main {
 
     
     private static Bon verwerkWasmachine(Gebruiker gebruiker, String keuze, List<Boolean> opties) {
-        System.out.println(keuze);
+        print(keuze);
         Wasmachine beschikbareWasmachine = Wasmachine.CheckBeschikbaarheid(opties);
         if (beschikbareWasmachine != null) {
-            System.out.println("Een wasmachine is beschikbaar op locatie: " + beschikbareWasmachine.getLocatie());
+            print("Een wasmachine is beschikbaar op locatie: " + beschikbareWasmachine.getLocatie());
             Wasprogramma gekozenWasprogramma = gebruiker.invoerWasprogramma(beschikbareWasmachine);
             return beschikbareWasmachine.startWasmachine(gekozenWasprogramma);
         }
         return null;
+    }
+
+    private static void print(String melding) {
+        System.out.println(melding);
     }
 }
