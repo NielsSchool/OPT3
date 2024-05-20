@@ -26,58 +26,37 @@ public class Main {
 
     private static Bon verwerkNieuweWas(Gebruiker gebruiker) {
         String invoer = gebruiker.vraagEigenWasmiddel();
-
+    
         if (invoer.equalsIgnoreCase("J")) {
-            System.out.println("Bedankt voor het gebruiken van je eigen wasmiddel.");
-            List<Boolean> opties = Arrays.asList(false, false, true);
-            Wasmachine beschikbareWasmachine = Wasmachine.CheckBeschikbaarheid(opties);
-            if (beschikbareWasmachine != null) {
-                System.out.println("Een wasmachine is beschikbaar op locatie: " + beschikbareWasmachine.getLocatie());
-                Wasprogramma gekozenWasprogramma = gebruiker.invoerWasprogramma(beschikbareWasmachine);
-                return beschikbareWasmachine.startWasmachine(gekozenWasprogramma);
-            }
+            return verwerkWasmachine(gebruiker, "Bedankt voor het gebruiken van je eigen wasmiddel.", Arrays.asList(false, false, true));
         } else {
             invoer = gebruiker.vraagDrogerGebruik();
             if (invoer.equalsIgnoreCase("J")) {
-                System.out.println("Bedankt voor het gebruik van de droger.");
-                List<Boolean> opties = Arrays.asList(true, false, false);
-                Wasmachine beschikbareWasmachine = Wasmachine.CheckBeschikbaarheid(opties);
-                if (beschikbareWasmachine != null) {
-                    System.out.println("Een wasmachine is beschikbaar op locatie: " + beschikbareWasmachine.getLocatie());
-                    Wasprogramma gekozenWasprogramma = gebruiker.invoerWasprogramma(beschikbareWasmachine);
-                    return beschikbareWasmachine.startWasmachine(gekozenWasprogramma);
-                }
+                return verwerkWasmachine(gebruiker, "Bedankt voor het gebruik van de wasmachine met droger.", Arrays.asList(true, false, false));
             } else {
                 invoer = gebruiker.vraagKiloWas();
                 if (invoer.equalsIgnoreCase("A")) {
-                    System.out.println("Bedankt voor het wassen van 5 kilo was.");
-                    List<Boolean> opties = Arrays.asList(false, true, false);
-                    Wasmachine beschikbareWasmachine = Wasmachine.CheckBeschikbaarheid(opties);
-                    if (beschikbareWasmachine != null) {
-                        System.out.println("Een wasmachine is beschikbaar op locatie: " + beschikbareWasmachine.getLocatie());
-                        Wasprogramma gekozenWasprogramma = gebruiker.invoerWasprogramma(beschikbareWasmachine);
-                        return beschikbareWasmachine.startWasmachine(gekozenWasprogramma);
-                    }
+                    return verwerkWasmachine(gebruiker, "Bedankt voor het wassen van 5 kilo was.", Arrays.asList(false, true, false));
                 } else if (invoer.equalsIgnoreCase("B")) {
-                    System.out.println("Bedankt voor het wassen van 10 kilo was.");
-                    List<Boolean> opties = Arrays.asList(false, true, false);
-                    Wasmachine beschikbareWasmachine = Wasmachine.CheckBeschikbaarheid(opties);
-                    if (beschikbareWasmachine != null) {
-                        System.out.println("Een wasmachine is beschikbaar op locatie: " + beschikbareWasmachine.getLocatie());
-                        Wasprogramma gekozenWasprogramma = gebruiker.invoerWasprogramma(beschikbareWasmachine);
-                        return beschikbareWasmachine.startWasmachine(gekozenWasprogramma);
-                    }
+                    return verwerkWasmachine(gebruiker, "Bedankt voor het wassen van 10 kilo was.", Arrays.asList(false, true, false));
                 } else if (invoer.equalsIgnoreCase("C")) {
-                    System.out.println("Bedankt voor het wassen van 20 kilo was.");
-                    List<Boolean> opties = Arrays.asList(false, true, false);
-                    Wasmachine beschikbareWasmachine = Wasmachine.CheckBeschikbaarheid(opties);
-                    if (beschikbareWasmachine != null) {
-                        System.out.println("Een wasmachine is beschikbaar op locatie: " + beschikbareWasmachine.getLocatie());
-                        Wasprogramma gekozenWasprogramma = gebruiker.invoerWasprogramma(beschikbareWasmachine);
-                        return beschikbareWasmachine.startWasmachine(gekozenWasprogramma);
-                    }
+                    return verwerkWasmachine(gebruiker, "Bedankt voor het wassen van 20 kilo was.", Arrays.asList(false, true, false));
                 }
             }
+        }
+        return null;
+    }
+        
+    
+
+    
+    private static Bon verwerkWasmachine(Gebruiker gebruiker, String keuze, List<Boolean> opties) {
+        System.out.println(keuze);
+        Wasmachine beschikbareWasmachine = Wasmachine.CheckBeschikbaarheid(opties);
+        if (beschikbareWasmachine != null) {
+            System.out.println("Een wasmachine is beschikbaar op locatie: " + beschikbareWasmachine.getLocatie());
+            Wasprogramma gekozenWasprogramma = gebruiker.invoerWasprogramma(beschikbareWasmachine);
+            return beschikbareWasmachine.startWasmachine(gekozenWasprogramma);
         }
         return null;
     }
