@@ -9,31 +9,13 @@ public class Gebruiker {
         this.sc = new Scanner(System.in);
     }
 
-    public String vraagNieuweWas() {
+    public Boolean stelJaNeeVraag(String vraag) {
         String invoer = "";
         while (!invoer.equalsIgnoreCase("J") && !invoer.equalsIgnoreCase("N")) {
-            System.out.println("Wil je een nieuwe was starten? (J/N)");
+            System.out.println(vraag);
             invoer = sc.nextLine();
         }
-        return invoer;
-    }
-
-    public String vraagEigenWasmiddel() {
-        String invoer = "";
-        while (!invoer.equalsIgnoreCase("J") && !invoer.equalsIgnoreCase("N")) {
-            System.out.println("Welkom bij het wasprogramma. Wil je je eigen wasmiddel gebruiken? (J/N)");
-            invoer = sc.nextLine();
-        }
-        return invoer;
-    }
-
-    public String vraagDrogerGebruik() {
-        String invoer = "";
-        while (!invoer.equalsIgnoreCase("J") && !invoer.equalsIgnoreCase("N")) {
-            System.out.println("Wil je de droger gebruiken? (J/N)");
-            invoer = sc.nextLine();
-        }
-        return invoer;
+        return invoer.equalsIgnoreCase("J");
     }
 
     public String vraagKiloWas() {

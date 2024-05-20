@@ -7,8 +7,8 @@ public class Main {
         Gebruiker gebruiker = new Gebruiker();
 
         while (true) {
-            String keuze = gebruiker.vraagNieuweWas();
-            if (keuze.equalsIgnoreCase("J")) {
+            Boolean keuze = gebruiker.stelJaNeeVraag("Wil je een nieuwe was starten? (J/N)");
+            if (keuze) {
                 startNieuweWas(gebruiker);
             } else {
                 print("Huidige bonnen:");
@@ -25,16 +25,16 @@ public class Main {
     }
 
     private static Bon verwerkNieuweWas(Gebruiker gebruiker) {
-        String invoer = gebruiker.vraagEigenWasmiddel();
+        Boolean jaNee = gebruiker.stelJaNeeVraag("Welkom bij het wasprogramma. Wil je je eigen wasmiddel gebruiken? (J/N)");
     
-        if (invoer.equalsIgnoreCase("J")) {
+        if (jaNee) {
             return verwerkWasmachine(gebruiker, "Bedankt voor het gebruiken van je eigen wasmiddel.", Arrays.asList(false, false, true));
         } else {
-            invoer = gebruiker.vraagDrogerGebruik();
-            if (invoer.equalsIgnoreCase("J")) {
+            jaNee = gebruiker.stelJaNeeVraag("Wil je de droger gebruiken? (J/N)");
+            if (jaNee) {
                 return verwerkWasmachine(gebruiker, "Bedankt voor het gebruik van de wasmachine met droger.", Arrays.asList(true, false, false));
             } else {
-                invoer = gebruiker.vraagKiloWas();
+                String invoer = gebruiker.vraagKiloWas();
                 if (invoer.equalsIgnoreCase("A")) {
                     return verwerkWasmachine(gebruiker, "Bedankt voor het wassen van 5 kilo was.", Arrays.asList(false, true, false));
                 } else if (invoer.equalsIgnoreCase("B")) {
