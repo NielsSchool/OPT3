@@ -3,9 +3,20 @@ public class WasmachineMetDroger extends Wasmachine {
         super(nr, locatie);
     }
 
+    @Override
+    public void voorWas() {
+    }
+
+    @Override
+    public void hoofdWas() {
+    }
+
+    @Override
+    public void naWas() {
+        startDrogen();
+    }
+
     public void startDrogen() {
-        //cooldown/ zet status op aan het drogen
-        //mogelijke implementatie voor uitbreidingen met behulp van super.startwasmachine
         this.updateWasmachineStatus(true);
     }
 }
