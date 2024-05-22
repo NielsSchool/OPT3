@@ -1,8 +1,9 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Gebruiker {
+public class Gebruiker implements Observer {
     private Scanner sc;
+    private ArrayList<Wasbeurt> wasbeurten = new ArrayList<>(); 
     // private Gebruiker huidigeGebruiker;
 
     public Gebruiker() {
@@ -38,5 +39,16 @@ public class Gebruiker {
         int keuze = sc.nextInt();
         sc.nextLine(); // consume newline
         return wasprogrammas.get(keuze - 1);
+    }
+
+    @Override
+    public void update(Wasbeurt wasbeurt) {
+        System.out.println("Wasbeurt nr. " + wasbeurt.getBonCode() + " is klaar om opgehaald te worden.");
+        wasbeurten.remove(wasbeurt);
+    }
+
+    public void startWasbeurt(Wasbeurt wasbeurt) {
+        wasbeurt.addObserver(this);
+        wasbeurten.add(wasbeurt);
     }
 }

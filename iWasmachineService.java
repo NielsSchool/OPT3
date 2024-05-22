@@ -1,5 +1,5 @@
 public interface IWasmachineService {
-        Wasbeurt startWasmachine(Wasprogramma wasprogramma);
+        Wasmachine startWasmachine(Wasprogramma wasprogramma);
     
         void updateWasmachineStatus(boolean beschikbaar);
 }

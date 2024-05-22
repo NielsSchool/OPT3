@@ -12,7 +12,7 @@ public class Main {
                 startNieuweWas(gebruiker);
             } else {
                 print("Huidige wasbeurten:");
-                Wasbeurt.printHuidigeBonnen();
+                Wasbeurt.printHuidigeWasbeurten();
             }
         }
     }
@@ -56,7 +56,10 @@ public class Main {
         if (beschikbareWasmachine != null) {
             print("Een wasmachine is beschikbaar op locatie: " + beschikbareWasmachine.getLocatie());
             Wasprogramma gekozenWasprogramma = gebruiker.invoerWasprogramma(beschikbareWasmachine);
-            return beschikbareWasmachine.startWasmachine(gekozenWasprogramma);
+            Wasmachine gekozenWasmachine = beschikbareWasmachine.startWasmachine(gekozenWasprogramma);
+            Wasbeurt wasbeurt = new Wasbeurt(gekozenWasmachine, gekozenWasprogramma);
+            gebruiker.startWasbeurt(wasbeurt);
+            return wasbeurt;
         }
         return null;
     }

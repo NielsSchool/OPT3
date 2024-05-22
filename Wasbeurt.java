@@ -2,15 +2,17 @@ import java.sql.Timestamp;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-public class Wasbeurt {
+public class Wasbeurt implements Subject {
     private int bonCode;
     private Timestamp eindTijd;
     private Wasmachine wasmachine;
     private Wasprogramma wasprogramma;
     private static ArrayList<Wasbeurt> wasbeurten = new ArrayList<>();
+    private List<Observer> observers = new ArrayList<>();
 
     public Wasbeurt(Wasmachine wasmachine, Wasprogramma wasprogramma) {
         this.bonCode = genereerBonCode();
@@ -18,6 +20,7 @@ public class Wasbeurt {
         this.wasprogramma = wasprogramma;
         this.eindTijd = Timestamp.valueOf(LocalDateTime.now().plus(wasprogramma.getAantalMinuten(), ChronoUnit.MINUTES));
         wasbeurten.add(this);
+        startUpdateCycles();
     }
 
     private String checkWachttijd() {
@@ -38,7 +41,7 @@ public class Wasbeurt {
         return bonCode;
     }
 
-    public static void printHuidigeBonnen() {
+    public static void printHuidigeWasbeurten() {
         int index = 0;
         for (Wasbeurt wasbeurt : wasbeurten) {
             index += 1;
@@ -47,7 +50,7 @@ public class Wasbeurt {
         }
     }
 
-    public static int getBonnenLength() {
+    public static int getWasbeurtenLength() {
         return wasbeurten.size();
     }
 
@@ -65,5 +68,40 @@ public class Wasbeurt {
 
     public void setWasprogramma(Wasprogramma wasprogramma) {
         this.wasprogramma = wasprogramma;
+    }
+
+    @Override
+    public void addObserver(Observer observer) {
+        observers.add(observer);
+    }
+
+    @Override
+    public void removeObserver(Observer observer) {
+        observers.remove(observer);
+    }
+
+    @Override
+    public void notifyObservers() {
+        for (Observer observer : observers) {
+            observer.update(this);
+        }
+    }
+
+    private void startUpdateCycles() {
+        new Thread(() -> {
+            try {
+                checkWasbeurtKlaar();
+                notifyObservers();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            } 
+        }).start();
+    } //wat chatGPT hulp gehad om te kijken wanneer de notifyObserver aangeroepen moet worden. Was aan het proberen om mijn methode checkWachttijd te gebruiken maar het werd te ingewikkeld. ik begrijp wel wat er gebeurd in de code
+
+    private void checkWasbeurtKlaar() throws InterruptedException {
+        long delay = this.eindTijd.getTime() - System.currentTimeMillis();
+        if (delay > 0) {
+            Thread.sleep(delay);
+        }
     }
 }

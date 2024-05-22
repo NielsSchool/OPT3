@@ -33,11 +33,6 @@ public class Wasprogramma {
         return naam;
     }
 
-    public static Wasbeurt startWasprogramma(Wasprogramma wasprogramma, Wasmachine wasmachine) {
-        Wasbeurt wasbeurt = new Wasbeurt(wasmachine, wasprogramma);
-        return wasbeurt;
-    }
-
     public String getOmschrijving() {
         return omschrijving;
     }
