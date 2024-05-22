@@ -38,11 +38,11 @@ class WasmachineTest {
 
     @Test
     void startWasmachine() {
-        // Testen of een bon wordt geretourneerd
-        Bon bon = wasm1.startWasmachine(wp1);
-        assertNotNull(bon);
-        assertEquals(wp1, bon.getWasprogramma());
-        assertEquals(wasm1, bon.getWasmachine());
+        // Testen of een wasbeurt wordt geretourneerd
+        Wasbeurt wasbeurt = wasm1.startWasmachine(wp1);
+        assertNotNull(wasbeurt);
+        assertEquals(wp1, wasbeurt.getWasprogramma());
+        assertEquals(wasm1, wasbeurt.getWasmachine());
     }
 
     @Test
@@ -61,19 +61,19 @@ class WasmachineTest {
         wasm1.updateWasmachineStatus(true);
         assertTrue(wasm1.getBeschikbaar());
 
-        Bon bon = wasm1.startWasmachine(wasprogramma);
+        Wasbeurt wasbeurt = wasm1.startWasmachine(wasprogramma);
         assertFalse(wasm1.getBeschikbaar());
-        assertNotNull(bon);
+        assertNotNull(wasbeurt);
 
-        assertEquals(wasprogramma, bon.getWasprogramma());
-        assertEquals(wasm1, bon.getWasmachine());
+        assertEquals(wasprogramma, wasbeurt.getWasprogramma());
+        assertEquals(wasm1, wasbeurt.getWasmachine());
 
         wasm1.updateWasmachineStatus(false);
         assertFalse(wasm1.getBeschikbaar());
 
-        bon = wasm1.startWasmachine(wasprogramma);
+        wasbeurt = wasm1.startWasmachine(wasprogramma);
         assertFalse(wasm1.getBeschikbaar());
-        assertNull(bon);
+        assertNull(wasbeurt);
     }
 
     @Test
@@ -87,8 +87,8 @@ class WasmachineTest {
                 for (boolean mogelijkheidEigenWasmiddel : mogelijkheidEigenWasmiddelValues) {
                     Wasprogramma wasprogramma = new Wasprogramma(120, heeftDrogerNodig, moetIndustrieleMachine, mogelijkheidEigenWasmiddel, "wasprogramma", "wasprogramma1");
                     wasm1 = new Wasmachine(1, "Keuken");
-                    Bon bon = wasm1.startWasmachine(wasprogramma);
-                    assertNotNull(bon);
+                    Wasbeurt wasbeurt = wasm1.startWasmachine(wasprogramma);
+                    assertNotNull(wasbeurt);
                 }
             }
         }

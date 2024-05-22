@@ -5,19 +5,19 @@ import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-public class Bon {
+public class Wasbeurt {
     private int bonCode;
     private Timestamp eindTijd;
     private Wasmachine wasmachine;
     private Wasprogramma wasprogramma;
-    private static ArrayList<Bon> bonnen = new ArrayList<>();
+    private static ArrayList<Wasbeurt> wasbeurten = new ArrayList<>();
 
-    public Bon(Wasmachine wasmachine, Wasprogramma wasprogramma) {
+    public Wasbeurt(Wasmachine wasmachine, Wasprogramma wasprogramma) {
         this.bonCode = genereerBonCode();
         this.wasmachine = wasmachine;
         this.wasprogramma = wasprogramma;
         this.eindTijd = Timestamp.valueOf(LocalDateTime.now().plus(wasprogramma.getAantalMinuten(), ChronoUnit.MINUTES));
-        bonnen.add(this);
+        wasbeurten.add(this);
     }
 
     private String checkWachttijd() {
@@ -40,15 +40,15 @@ public class Bon {
 
     public static void printHuidigeBonnen() {
         int index = 0;
-        for (Bon bon : bonnen) {
+        for (Wasbeurt wasbeurt : wasbeurten) {
             index += 1;
-            System.out.println("[" + index + "]\nWasmachine: " + bon.wasmachine.getLocatie() +
-                    "\nWasprogramma: " + bon.wasprogramma.getNaam() + "\nWachttijd: " + bon.checkWachttijd());
+            System.out.println("[" + index + "]\nWasmachine: " + wasbeurt.wasmachine.getLocatie() +
+                    "\nWasprogramma: " + wasbeurt.wasprogramma.getNaam() + "\nWachttijd: " + wasbeurt.checkWachttijd());
         }
     }
 
     public static int getBonnenLength() {
-        return bonnen.size();
+        return wasbeurten.size();
     }
 
     public Wasmachine getWasmachine() {

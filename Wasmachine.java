@@ -44,7 +44,7 @@ public class Wasmachine implements IWasmachineService {
         return wasmachineBeschikbaar;
     }
     @Override
-    public Bon startWasmachine(Wasprogramma wasprogramma) {
+    public Wasbeurt startWasmachine(Wasprogramma wasprogramma) {
         if (this.beschikbaar) {
             this.cooldown = wasprogramma.getAantalMinuten();
             this.updateWasmachineStatus(false);

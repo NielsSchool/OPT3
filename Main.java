@@ -11,20 +11,20 @@ public class Main {
             if (keuze) {
                 startNieuweWas(gebruiker);
             } else {
-                print("Huidige bonnen:");
-                Bon.printHuidigeBonnen();
+                print("Huidige wasbeurten:");
+                Wasbeurt.printHuidigeBonnen();
             }
         }
     }
 
     private static void startNieuweWas(Gebruiker gebruiker) {
-        Bon bon = verwerkNieuweWas(gebruiker);
-        if (bon != null) {
-            print("Uw was is gestart. Boncode: " + bon.getBonCode());
+        Wasbeurt wasbeurt = verwerkNieuweWas(gebruiker);
+        if (wasbeurt != null) {
+            print("Uw was is gestart. Boncode: " + wasbeurt.getBonCode());
         }
     }
 
-    private static Bon verwerkNieuweWas(Gebruiker gebruiker) {
+    private static Wasbeurt verwerkNieuweWas(Gebruiker gebruiker) {
         Boolean jaNee = gebruiker.stelJaNeeVraag("Welkom bij het wasprogramma. Wil je je eigen wasmiddel gebruiken? (J/N)");
     
         if (jaNee) {
@@ -50,7 +50,7 @@ public class Main {
     
 
     
-    private static Bon verwerkWasmachine(Gebruiker gebruiker, String keuze, List<Boolean> opties) {
+    private static Wasbeurt verwerkWasmachine(Gebruiker gebruiker, String keuze, List<Boolean> opties) {
         print(keuze);
         Wasmachine beschikbareWasmachine = Wasmachine.CheckBeschikbaarheid(opties);
         if (beschikbareWasmachine != null) {

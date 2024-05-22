@@ -33,9 +33,9 @@ public class Wasprogramma {
         return naam;
     }
 
-    public static Bon startWasprogramma(Wasprogramma wasprogramma, Wasmachine wasmachine) {
-        Bon bon = new Bon(wasmachine, wasprogramma);
-        return bon;
+    public static Wasbeurt startWasprogramma(Wasprogramma wasprogramma, Wasmachine wasmachine) {
+        Wasbeurt wasbeurt = new Wasbeurt(wasmachine, wasprogramma);
+        return wasbeurt;
     }
 
     public String getOmschrijving() {
