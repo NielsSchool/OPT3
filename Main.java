@@ -35,13 +35,15 @@ public class Main {
                 return verwerkWasmachine(gebruiker, "Bedankt voor het gebruik van de wasmachine met droger.", Arrays.asList(true, false, false));
             } else {
                 String invoer = gebruiker.vraagKiloWas();
+                int kilos = 0;
                 if (invoer.equalsIgnoreCase("A")) {
-                    return verwerkWasmachine(gebruiker, "Bedankt voor het wassen van 5 kilo was.", Arrays.asList(false, true, false));
+                    kilos = 5;
                 } else if (invoer.equalsIgnoreCase("B")) {
-                    return verwerkWasmachine(gebruiker, "Bedankt voor het wassen van 10 kilo was.", Arrays.asList(false, true, false));
+                    kilos = 10;
                 } else if (invoer.equalsIgnoreCase("C")) {
-                    return verwerkWasmachine(gebruiker, "Bedankt voor het wassen van 20 kilo was.", Arrays.asList(false, true, false));
+                    kilos = 20;
                 }
+                return verwerkWasmachine(gebruiker, "Bedankt voor het wassen van "+ kilos +" kilo was.", Arrays.asList(false, true, false));
             }
         }
         return null;
