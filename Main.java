@@ -46,7 +46,6 @@ public class Main {
                 return verwerkWasmachine(gebruiker, "Bedankt voor het wassen van "+ kilos +" kilo was.", Arrays.asList(false, true, false));
             }
         }
-        return null;
     }
         
     
