@@ -1,4 +1,5 @@
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.Arrays;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -10,9 +11,9 @@ class WasmachineTest {
     void setUp() {
         wasm1 = new Wasmachine(1, "Keuken");
         wasm2 = new Wasmachine(2, "Badkamer");
-        wp1 = new Wasprogramma(120, true, false, false, "wasprogramma", "wasprogramma1");
-        wp2 = new Wasprogramma(90, false, true, false, "wasprogramma", "wasprogramma2");
-        wp3 = new Wasprogramma(60, false, false, true, "wasprogramma", "wasprogramma3");
+        wp1 = new Wasprogramma(120, Arrays.asList(true, false, false), "wasprogramma", "wasprogramma1");
+        wp2 = new Wasprogramma(90, Arrays.asList(false, true, false), "wasprogramma", "wasprogramma2");
+        wp3 = new Wasprogramma(60, Arrays.asList(false, false, true), "wasprogramma", "wasprogramma3");
         wasm1.addWasprogramma(wp1);
         wasm1.addWasprogramma(wp2);
         wasm2.addWasprogramma(wp3);
@@ -21,25 +22,24 @@ class WasmachineTest {
     @Test
     void checkBeschikbaarheid() {
         // Testen of een beschikbare wasmachine wordt geretourneerd
-        Wasmachine wasmachine = Wasmachine.CheckBeschikbaarheid(false, false, false);
+        Wasmachine wasmachine = Wasmachine.CheckBeschikbaarheid(Arrays.asList(false, false, false));
         assertNull(wasmachine);
-        wasmachine = Wasmachine.CheckBeschikbaarheid(true, false, false);
+        wasmachine = Wasmachine.CheckBeschikbaarheid(Arrays.asList(true, false, false));
         assertNotNull(wasmachine);
         // Testen of er null wordt geretourneerd als er geen beschikbare wasmachines zijn
         wasm1.updateWasmachineStatus(false);
         wasm2.updateWasmachineStatus(false);
-        wasmachine = Wasmachine.CheckBeschikbaarheid(false, false, false);
+        wasmachine = Wasmachine.CheckBeschikbaarheid(Arrays.asList(false, false, false));
         assertNull(wasmachine);
         // Testen of een wasmachine wordt geretourneerd die het juiste wasprogramma kan uitvoeren
         wasm1.updateWasmachineStatus(true);
-        wasmachine = Wasmachine.CheckBeschikbaarheid(true, false, false);
+        wasmachine = Wasmachine.CheckBeschikbaarheid(Arrays.asList(true, false, false));
         assertEquals(wasmachine, wasm1);
     }
 
     @Test
     void startWasmachine() {
-        // Testen of een wasbeurt wordt geretourneerd
-        Wasbeurt wasbeurt = wasm1.startWasmachine(wp1);
+        Wasbeurt wasbeurt = new Wasbeurt(wasm1, wp1);
         assertNotNull(wasbeurt);
         assertEquals(wp1, wasbeurt.getWasprogramma());
         assertEquals(wasm1, wasbeurt.getWasmachine());
@@ -56,12 +56,12 @@ class WasmachineTest {
 
     @Test
     void startWasmachineMCDC() {
-        Wasprogramma wasprogramma = new Wasprogramma(120, true, false, false, "wasprogramma", "wasprogramma1");
+        Wasprogramma wasprogramma = new Wasprogramma(120, Arrays.asList(true, false, false), "wasprogramma", "wasprogramma1");
 
         wasm1.updateWasmachineStatus(true);
         assertTrue(wasm1.getBeschikbaar());
 
-        Wasbeurt wasbeurt = wasm1.startWasmachine(wasprogramma);
+        Wasbeurt wasbeurt = new wasbeurt(wasm1, wasprogramma)
         assertFalse(wasm1.getBeschikbaar());
         assertNotNull(wasbeurt);
 
@@ -71,7 +71,7 @@ class WasmachineTest {
         wasm1.updateWasmachineStatus(false);
         assertFalse(wasm1.getBeschikbaar());
 
-        wasbeurt = wasm1.startWasmachine(wasprogramma);
+        wasbeurt = new Wasbeurt(wasm1, wasprogramma);
         assertFalse(wasm1.getBeschikbaar());
         assertNull(wasbeurt);
     }
@@ -85,13 +85,12 @@ class WasmachineTest {
         for (boolean heeftDrogerNodig : heeftDrogerNodigValues) {
             for (boolean moetIndustrieleMachine : moetIndustrieleMachineValues) {
                 for (boolean mogelijkheidEigenWasmiddel : mogelijkheidEigenWasmiddelValues) {
-                    Wasprogramma wasprogramma = new Wasprogramma(120, heeftDrogerNodig, moetIndustrieleMachine, mogelijkheidEigenWasmiddel, "wasprogramma", "wasprogramma1");
+                    Wasprogramma wasprogramma = new Wasprogramma(120, Arrays.asList(heeftDrogerNodig, moetIndustrieleMachine, mogelijkheidEigenWasmiddel), "wasprogramma", "wasprogramma1");
                     wasm1 = new Wasmachine(1, "Keuken");
-                    Wasbeurt wasbeurt = wasm1.startWasmachine(wasprogramma);
+                    Wasbeurt wasbeurt = new Wasbeurt(wasm1, wasprogramma);
                     assertNotNull(wasbeurt);
                 }
             }
         }
     }
-
 }
