@@ -57,18 +57,32 @@ class WasmachineTest {
     }
 
     @Test
-    void startWasmachineMCDC() {
+    void checkbeschikbaarheidMCDC() {
         List<List<Boolean>> opties = Arrays.asList(
-                //Arrays.asList(false, false, false, false), //wasmachine is null
+                // optie 1, optie 2, optie 3, decision/ verwachting
                 Arrays.asList(true, false, false, true),  //true
                 Arrays.asList(false, true, false, true),  //true
-                Arrays.asList(false, false, true, true)   //true
+                Arrays.asList(false, false, true, true),   //true
+                Arrays.asList(false, false, false, false), //wasmachine is null dus niet mogelijk
+                Arrays.asList(true, true, false, false), //wasmachine is null dus niet mogelijk
+                Arrays.asList(false, true, true, false), //wasmachine is null dus niet mogelijk
+                Arrays.asList(true, false, true, false) //wasmachine is null dus niet mogelijk
         );
 
         for (List<Boolean> optie : opties) {
             Boolean expected = optie.get(3);
-            Boolean result = Wasmachine.CheckBeschikbaarheid(Arrays.asList(optie.get(0), optie.get(1), optie.get(2))).getBeschikbaar();
-            assertEquals(expected, result);
+            Wasmachine result = Wasmachine.CheckBeschikbaarheid(Arrays.asList(optie.get(0), optie.get(1), optie.get(2)));
+            int aantalTrue = 0;
+            for (int i=0; i<3; i++) {
+                if (optie.get(i)) {
+                    aantalTrue += 1;
+                }
+            }
+            if (aantalTrue != 1) {
+                assertNull(result);
+            } else {
+            assertEquals(expected, result.getBeschikbaar());
+            }
         }
     }
 
