@@ -36,9 +36,6 @@ public class Wasmachine implements IWasmachineService {
                     if(wasprogramma.isHeeftDrogerNodig() == opties.get(0) && wasprogramma.isMoetInIndustrieleMachine() == opties.get(1) && wasprogramma.isMogelijkheidEigenWasmiddel() == opties.get(2)) {
                         wasmachineBeschikbaar = wasmachine;
                     }
-                    //else if (wasprogramma.isHeeftDrogerNodig() || heeftDrogerNodig || wasprogramma.isMoetInIndustrieleMachine() || moetIndustrieleMachine || wasprogramma.isMogelijkheidEigenWasmiddel() || mogelijkheidEigenWasmiddel) {
-                    //   wasmachineBeschikbaar = wasmachine;
-                    //}
                 }
             }
         }
@@ -57,5 +54,20 @@ public class Wasmachine implements IWasmachineService {
     @Override
     public void updateWasmachineStatus(boolean beschikbaar) {
         this.beschikbaar=beschikbaar;
+    }
+
+    @Override
+    public void voorWas() {
+
+    }
+
+    @Override
+    public void hoofdWas() {
+
+    }
+
+    @Override
+    public void naWas() {
+
     }
 }

@@ -1,5 +1,7 @@
 import static org.junit.jupiter.api.Assertions.*;
 import java.util.Arrays;
+import java.util.List;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -47,7 +49,7 @@ class WasmachineTest {
 
     @Test
     void updateWasmachineStatus() {
-        // Testen of de beschikbaarheid van de wasmachine correct wordt geüpdatet
+        // Testen of de beschikbaarheid van de wasmachine correct wordt geüpdate
         wasm1.updateWasmachineStatus(false);
         assertFalse(wasm1.getBeschikbaar());
         wasm1.updateWasmachineStatus(true);
@@ -56,24 +58,18 @@ class WasmachineTest {
 
     @Test
     void startWasmachineMCDC() {
-        Wasprogramma wasprogramma = new Wasprogramma(120, Arrays.asList(true, false, false), "wasprogramma", "wasprogramma1");
+        List<List<Boolean>> opties = Arrays.asList(
+                //Arrays.asList(false, false, false, false), //wasmachine is null
+                Arrays.asList(true, false, false, true),  //true
+                Arrays.asList(false, true, false, true),  //true
+                Arrays.asList(false, false, true, true)   //true
+        );
 
-        wasm1.updateWasmachineStatus(true);
-        assertTrue(wasm1.getBeschikbaar());
-
-        Wasbeurt wasbeurt = new wasbeurt(wasm1, wasprogramma)
-        assertFalse(wasm1.getBeschikbaar());
-        assertNotNull(wasbeurt);
-
-        assertEquals(wasprogramma, wasbeurt.getWasprogramma());
-        assertEquals(wasm1, wasbeurt.getWasmachine());
-
-        wasm1.updateWasmachineStatus(false);
-        assertFalse(wasm1.getBeschikbaar());
-
-        wasbeurt = new Wasbeurt(wasm1, wasprogramma);
-        assertFalse(wasm1.getBeschikbaar());
-        assertNull(wasbeurt);
+        for (List<Boolean> optie : opties) {
+            Boolean expected = optie.get(3);
+            Boolean result = Wasmachine.CheckBeschikbaarheid(Arrays.asList(optie.get(0), optie.get(1), optie.get(2))).getBeschikbaar();
+            assertEquals(expected, result);
+        }
     }
 
     @Test
