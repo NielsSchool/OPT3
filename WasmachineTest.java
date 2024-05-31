@@ -8,17 +8,23 @@ import org.junit.jupiter.api.Test;
 class WasmachineTest {
     //arrange
     private Wasmachine wasm1, wasm2;
+    private WasMachineIndustrieel wasm3;
     private Wasprogramma wp1, wp2, wp3;
+    private Gebruiker gebruiker;
     @BeforeEach
     void setUp() {
+        Gebruiker gebruiker = new Gebruiker();
         wasm1 = new Wasmachine(1, "Keuken");
         wasm2 = new Wasmachine(2, "Badkamer");
+        wasm3 = new WasMachineIndustrieel(2, "industrieel");
         wp1 = new Wasprogramma(120, Arrays.asList(true, false, false), "wasprogramma", "wasprogramma1");
         wp2 = new Wasprogramma(90, Arrays.asList(false, true, false), "wasprogramma", "wasprogramma2");
         wp3 = new Wasprogramma(60, Arrays.asList(false, false, true), "wasprogramma", "wasprogramma3");
         wasm1.addWasprogramma(wp1);
         wasm1.addWasprogramma(wp2);
         wasm2.addWasprogramma(wp3);
+        wasm3.addWasprogramma(wp2);
+        wasm3.setGewichtRange(5,20);
     }
 
     @Test
@@ -85,20 +91,52 @@ class WasmachineTest {
             }
         }
     }
+//equivalentieklasse
+    @Test
+    public void testGewichtGeschikt() {
+        wasm3.setGewichtRange(10, 20);
+        assertTrue(wasm3.checkGewicht(15));
+    }
 
+    @Test
+    public void testGewichtTelaag() {
+        wasm3.setGewichtRange(10, 20);
+        assertFalse(wasm3.checkGewicht(5));
+    }
+
+    @Test
+    public void testGewichtTehoog() {
+        wasm3.setGewichtRange(10, 20);
+        assertFalse(wasm3.checkGewicht(25));
+    }
+
+    @Test
+    void testCheckWasbeurtKlaarDC() {
+        Wasprogramma wpKlaar = new Wasprogramma(0, Arrays.asList(true, false, false), "Normaal", "Standaard wasprogramma");
+        Wasbeurt wasbeurt = new Wasbeurt(wasm1, wp1);
+        assertFalse(wasbeurt.checkWachttijdOver());
+        wasbeurt = new Wasbeurt(wasm1, wpKlaar);
+        assertTrue(wasbeurt.checkWachttijdOver());
+    }
     @Test //wasmachine bepalen adh van gewicht zodat 3 variabelen, 2 variabelen, 2 variabelen getest kan worden.
-    void startWasmachine_Pairwise() {
+    void CheckBeschikbaarheid_Pairwise() {
+        int[] gewichten = {1, 10, 25}; //3 variabelen voor gewicht van was
         boolean[] heeftDrogerNodigValues = { true, false };
         boolean[] moetIndustrieleMachineValues = { true, false };
         boolean[] mogelijkheidEigenWasmiddelValues = { true, false };
 
+
+        boolean[] verwachtingen = {false, true, false};
+
         for (boolean heeftDrogerNodig : heeftDrogerNodigValues) {
             for (boolean moetIndustrieleMachine : moetIndustrieleMachineValues) {
                 for (boolean mogelijkheidEigenWasmiddel : mogelijkheidEigenWasmiddelValues) {
-                    Wasprogramma wasprogramma = new Wasprogramma(120, Arrays.asList(heeftDrogerNodig, moetIndustrieleMachine, mogelijkheidEigenWasmiddel), "wasprogramma", "wasprogramma1");
-                    wasm1 = new Wasmachine(1, "Keuken");
-                    Wasbeurt wasbeurt = new Wasbeurt(wasm1, wasprogramma);
-                    assertNotNull(wasbeurt);
+                    for (boolean verwachting : verwachtingen) {
+                        for(int gewicht: gewichten) {
+                            assertEquals(verwachting, wasm3.checkGewicht(gewicht));
+                            Wasmachine beschikbareWasmachine = Wasmachine.CheckBeschikbaarheid(Arrays.asList(heeftDrogerNodig, moetIndustrieleMachine, mogelijkheidEigenWasmiddel));
+                        }
+                    }
                 }
             }
         }

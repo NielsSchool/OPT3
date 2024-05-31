@@ -31,7 +31,12 @@ public class Wasbeurt implements Subject {
         wachttijd = differenceInMinutes + wachttijd;
         return wachttijd;
     }
-
+    public boolean checkWachttijdOver() {
+        Timestamp huidigeTijd = new Timestamp(System.currentTimeMillis());
+        long differenceInMillis = this.eindTijd.getTime() - huidigeTijd.getTime();
+        long differenceInMinutes = TimeUnit.MILLISECONDS.toMinutes(differenceInMillis);
+        return (differenceInMinutes == 0);
+    }
     private int genereerBonCode() {
         Random random = new Random();
         return random.nextInt(90000000) + 10000000;
@@ -98,7 +103,7 @@ public class Wasbeurt implements Subject {
         }).start();
     } //wat chatGPT hulp gehad om te kijken wanneer de notifyObserver aangeroepen moet worden. Was aan het proberen om mijn methode checkWachttijd te gebruiken maar het werd te ingewikkeld. ik begrijp wel wat er gebeurd in de code
 
-    private void checkWasbeurtKlaar() throws InterruptedException {
+    public void checkWasbeurtKlaar() throws InterruptedException {
         long delay = this.eindTijd.getTime() - System.currentTimeMillis();
         if (delay > 0) {
             Thread.sleep(delay);

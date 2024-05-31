@@ -24,5 +24,13 @@ public class WasMachineIndustrieel extends Wasmachine {
     @Override
     public void naWas() {
     }
+
+    public boolean checkGewicht(int gewicht) {
+        if (this.gewichtRange[0] <= gewicht && gewicht <= gewichtRange[1]) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
