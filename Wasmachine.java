@@ -7,7 +7,6 @@ public class Wasmachine implements IWasmachineService {
     private String status;
     private boolean beschikbaar;
     private int cooldown;
-    
     public static ArrayList<Wasmachine> Wasmachines = new ArrayList<Wasmachine>();
     private ArrayList<Wasprogramma> wasprogrammas = new ArrayList<Wasprogramma>();
     public Wasmachine(int nr, String locatie) {

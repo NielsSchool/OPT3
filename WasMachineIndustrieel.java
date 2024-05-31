@@ -1,6 +1,17 @@
 public class WasMachineIndustrieel extends Wasmachine {
+    private int[] gewichtRange;
     public WasMachineIndustrieel(int nr, String locatie) {
         super(nr, locatie);
+    }
+    public void setGewichtRange(int van, int tot) {
+        int[] nieuweRange = new int[2];
+        nieuweRange[0]= van;
+        nieuweRange[1]= tot;
+        this.gewichtRange = nieuweRange;
+    }
+
+    public int[] getGewichtRange() {
+        return this.gewichtRange;
     }
     @Override
     public void voorWas() {
