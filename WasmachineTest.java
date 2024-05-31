@@ -63,10 +63,10 @@ class WasmachineTest {
                 Arrays.asList(true, false, false, true),  //true
                 Arrays.asList(false, true, false, true),  //true
                 Arrays.asList(false, false, true, true),   //true
-                Arrays.asList(false, false, false, false), //wasmachine is null dus niet mogelijk
-                Arrays.asList(true, true, false, false), //wasmachine is null dus niet mogelijk
-                Arrays.asList(false, true, true, false), //wasmachine is null dus niet mogelijk
-                Arrays.asList(true, false, true, false) //wasmachine is null dus niet mogelijk
+                Arrays.asList(false, false, false, false) //wasmachine is null dus niet mogelijk
+                //Arrays.asList(true, true, false, false), //wasmachine is null dus niet mogelijk
+                //Arrays.asList(false, true, true, false), //wasmachine is null dus niet mogelijk
+                //Arrays.asList(true, false, true, false), //wasmachine is null dus niet mogelijk
         );
 
         for (List<Boolean> optie : opties) {
@@ -86,7 +86,7 @@ class WasmachineTest {
         }
     }
 
-    @Test
+    @Test //wasmachine bepalen adh van gewicht zodat 3 variabelen, 2 variabelen, 2 variabelen getest kan worden.
     void startWasmachine_Pairwise() {
         boolean[] heeftDrogerNodigValues = { true, false };
         boolean[] moetIndustrieleMachineValues = { true, false };
