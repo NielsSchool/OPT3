@@ -15,6 +15,7 @@ public class WasMachineIndustrieel extends Wasmachine {
     }
     @Override
     public void voorWas() {
+        //checkGewicht();
     }
 
     @Override

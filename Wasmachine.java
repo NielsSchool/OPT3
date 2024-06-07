@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.List;
 
-public class Wasmachine implements IWasmachineService {
+public abstract class Wasmachine {
     private int nr;
     private String locatie;
     private String status;
@@ -40,7 +40,7 @@ public class Wasmachine implements IWasmachineService {
         }
         return wasmachineBeschikbaar;
     }
-    @Override
+
     public Wasmachine startWasmachine(Wasprogramma wasprogramma) {
         if (this.beschikbaar) {
             this.cooldown = wasprogramma.getAantalMinuten();
@@ -50,23 +50,11 @@ public class Wasmachine implements IWasmachineService {
             return null;
         }
     }
-    @Override
     public void updateWasmachineStatus(boolean beschikbaar) {
         this.beschikbaar=beschikbaar;
     }
 
-    @Override
-    public void voorWas() {
-
-    }
-
-    @Override
-    public void hoofdWas() {
-
-    }
-
-    @Override
-    public void naWas() {
-
-    }
+    public abstract void voorWas();
+    public abstract void hoofdWas();
+    public abstract void naWas();
 }
