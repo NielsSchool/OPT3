@@ -71,10 +71,10 @@ public class Wasbeurt extends Subject {
         observers.add(observer);
     }
 
-    @Override
-    public void removeObserver(Observer observer) {
-        observers.remove(observer);
-    }
+    //@Override
+    //public void removeObserver(Observer observer) {
+    //    observers.remove(observer);
+    //}
 
     @Override
     public void notifyObservers() {

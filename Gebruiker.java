@@ -2,15 +2,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Gebruiker implements Observer {
-    private Scanner sc;
     private ArrayList<Wasbeurt> wasbeurten = new ArrayList<>(); 
     // private Gebruiker huidigeGebruiker;
-
-    public Gebruiker() {
-        this.sc = new Scanner(System.in);
-    }
-
     public Boolean stelJaNeeVraag(String vraag) {
+        Scanner sc = new Scanner(System.in);
         String invoer = "";
         while (!invoer.equalsIgnoreCase("J") && !invoer.equalsIgnoreCase("N")) {
             System.out.println(vraag);
@@ -20,6 +15,7 @@ public class Gebruiker implements Observer {
     }
 
     public String vraagKiloWas() {
+        Scanner sc = new Scanner(System.in);
         String invoer = "";
         while (!invoer.equalsIgnoreCase("A") && !invoer.equalsIgnoreCase("B") && !invoer.equalsIgnoreCase("C")) {
             System.out.println("Hoeveel kilo was wil je wassen? (A/B/C)");
@@ -29,6 +25,7 @@ public class Gebruiker implements Observer {
     }
 
     public Wasprogramma invoerWasprogramma(Wasmachine beschikbareWasmachine) {
+        Scanner sc = new Scanner(System.in);
         System.out.println("Beschikbare wasprogramma's:");
         ArrayList<Wasprogramma> wasprogrammas = beschikbareWasmachine.getWasprogrammas();
         for (int i = 0; i < wasprogrammas.size(); i++) {
