@@ -14,8 +14,8 @@ class WasmachineTest {
     @BeforeEach
     void setUp() {
         Gebruiker gebruiker = new Gebruiker();
-        wasm1 = new Wasmachine(1, "Keuken");
-        wasm2 = new Wasmachine(2, "Badkamer");
+        wasm1 = new WasmachineMetDroger(1, "Keuken");
+        wasm2 = new WasMachineCompact(2, "Badkamer", true);
         wasm3 = new WasMachineIndustrieel(2, "industrieel");
         wp1 = new Wasprogramma(120, Arrays.asList(true, false, false), "wasprogramma", "wasprogramma1");
         wp2 = new Wasprogramma(90, Arrays.asList(false, true, false), "wasprogramma", "wasprogramma2");
@@ -118,27 +118,33 @@ class WasmachineTest {
         wasbeurt = new Wasbeurt(wasm1, wpKlaar);
         assertTrue(wasbeurt.checkWachttijdOver());
     }
-    @Test //wasmachine bepalen adh van gewicht zodat 3 variabelen, 2 variabelen, 2 variabelen getest kan worden.
+    @Test
     void CheckBeschikbaarheid_Pairwise() {
-        int[] gewichten = {1, 10, 25}; //3 variabelen voor gewicht van was
-        boolean[] heeftDrogerNodigValues = { true, false };
-        boolean[] moetIndustrieleMachineValues = { true, false };
-        boolean[] mogelijkheidEigenWasmiddelValues = { true, false };
+        int[] gewichten = {1, 1, 10, 10, 25, 25};
+        boolean[][] combinaties = {
+                {true, true, true},    // < 5 kg, combinatie 1
+                {false, false, false}, // < 5 kg, combinatie 2
+                {true, false, true},   // tussen 5-20 kg, combinatie 1
+                {false, true, false},  // tussen 5-20 kg, combinatie 2
+                {true, true, false},   // > 20 kg, combinatie 1
+                {false, false, true}   // > 20 kg, combinatie 2
+        };
+        boolean[] verwachtingen = {false, false, false, true, false, false};
 
-
-        boolean[] verwachtingen = {false, true, false};
-
-        for (boolean heeftDrogerNodig : heeftDrogerNodigValues) {
-            for (boolean moetIndustrieleMachine : moetIndustrieleMachineValues) {
-                for (boolean mogelijkheidEigenWasmiddel : mogelijkheidEigenWasmiddelValues) {
-                    for (boolean verwachting : verwachtingen) {
-                        for(int gewicht: gewichten) {
-                            assertEquals(verwachting, wasm3.checkGewicht(gewicht));
-                            Wasmachine beschikbareWasmachine = Wasmachine.CheckBeschikbaarheid(Arrays.asList(heeftDrogerNodig, moetIndustrieleMachine, mogelijkheidEigenWasmiddel));
-                        }
-                    }
+        for (int i = 0; i < combinaties.length; i++) {
+            boolean[] combinatie = combinaties[i];
+            boolean verwacht = verwachtingen[i];
+            int gewicht = gewichten[i];
+            Wasmachine wasmBesch = Wasmachine.CheckBeschikbaarheid(Arrays.asList(combinatie[0], combinatie[1], combinatie[2]));
+            if (wasmBesch instanceof WasMachineIndustrieel) {
+                if (verwacht) {
+                    assertNotNull(wasmBesch);
+                    assertTrue(((WasMachineIndustrieel) wasmBesch).checkGewicht(gewicht));
+                } else {
+                    assertNull(wasmBesch);
                 }
             }
         }
     }
+
 }
