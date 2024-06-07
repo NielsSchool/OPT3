@@ -22,15 +22,6 @@ public class Wasbeurt implements Subject {
         wasbeurten.add(this);
         startUpdateCycles();
     }
-
-    private String checkWachttijd() {
-        String wachttijd = " Minuten";
-        Timestamp huidigeTijd = new Timestamp(System.currentTimeMillis());
-        long differenceInMillis = this.eindTijd.getTime() - huidigeTijd.getTime();
-        long differenceInMinutes = TimeUnit.MILLISECONDS.toMinutes(differenceInMillis);
-        wachttijd = differenceInMinutes + wachttijd;
-        return wachttijd;
-    }
     public boolean checkWachttijdOver() {
         Timestamp huidigeTijd = new Timestamp(System.currentTimeMillis());
         long differenceInMillis = this.eindTijd.getTime() - huidigeTijd.getTime();
@@ -51,7 +42,7 @@ public class Wasbeurt implements Subject {
         for (Wasbeurt wasbeurt : wasbeurten) {
             index += 1;
             System.out.println("[" + index + "]\nWasmachine: " + wasbeurt.wasmachine.getLocatie() +
-                    "\nWasprogramma: " + wasbeurt.wasprogramma.getNaam() + "\nWachttijd: " + wasbeurt.checkWachttijd());
+                    "\nWasprogramma: " + wasbeurt.wasprogramma.getNaam() + "\nKlaar: " + wasbeurt.checkWachttijdOver());
         }
     }
 
