@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
-public class Wasbeurt implements Subject {
+public class Wasbeurt extends Subject {
     private int bonCode;
     private Timestamp eindTijd;
     private Wasmachine wasmachine;
@@ -90,7 +90,7 @@ public class Wasbeurt implements Subject {
                 notifyObservers();
             } catch (InterruptedException e) {
                 e.printStackTrace();
-            } 
+            }
         }).start();
     } //wat chatGPT hulp gehad om te kijken wanneer de notifyObserver aangeroepen moet worden. Was aan het proberen om mijn methode checkWachttijd te gebruiken maar het werd te ingewikkeld. ik begrijp wel wat er gebeurd in de code
 
