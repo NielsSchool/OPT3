@@ -66,13 +66,12 @@ class WasmachineTest {
     void checkbeschikbaarheidMCDC() {
         List<List<Boolean>> opties = Arrays.asList(
                 // optie 1, optie 2, optie 3, decision/ verwachting
-                Arrays.asList(true, false, false, true),  //true
-                Arrays.asList(false, true, false, true),  //true
-                Arrays.asList(false, false, true, true),   //true
-                Arrays.asList(false, false, false, false) //wasmachine is null dus niet mogelijk
-                //Arrays.asList(true, true, false, false), //wasmachine is null dus niet mogelijk
-                //Arrays.asList(false, true, true, false), //wasmachine is null dus niet mogelijk
-                //Arrays.asList(true, false, true, false), //wasmachine is null dus niet mogelijk
+                Arrays.asList(true, false, false, true),
+                Arrays.asList(false, true, false, true),
+                Arrays.asList(false, false, true, true),
+                Arrays.asList(false, true, true, true),
+                Arrays.asList(true, false, true, true),
+                Arrays.asList(true, true, false, true)
         );
 
         for (List<Boolean> optie : opties) {
@@ -111,6 +110,15 @@ class WasmachineTest {
     }
 
     @Test
+    public void checkGewichtRandwaarden() {
+        int[] testgevallen = {4,6,19,21};
+        boolean[] verwachtingen = {false, true, true, false};
+        for (int i = 0; i < 4; i++) {
+            assertEquals(wasm3.checkGewicht(testgevallen[i]), verwachtingen[i]);
+        }
+    }
+
+    @Test
     void testCheckWasbeurtKlaarDC() {
         Wasprogramma wpKlaar = new Wasprogramma(0, Arrays.asList(true, false, false), "Normaal", "Standaard wasprogramma");
         Wasbeurt wasbeurt = new Wasbeurt(wasm1, wp1);
@@ -146,5 +154,7 @@ class WasmachineTest {
             }
         }
     }
+
+
 
 }
