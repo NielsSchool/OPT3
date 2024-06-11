@@ -66,28 +66,11 @@ public class Wasbeurt extends Subject {
         this.wasprogramma = wasprogramma;
     }
 
-    @Override
-    public void addObserver(Observer observer) {
-        observers.add(observer);
-    }
-
-    //@Override
-    //public void removeObserver(Observer observer) {
-    //    observers.remove(observer);
-    //}
-
-    @Override
-    public void notifyObservers() {
-        for (Observer observer : observers) {
-            observer.update(this);
-        }
-    }
-
     private void startUpdateCycles() {
         new Thread(() -> {
             try {
                 checkWasbeurtKlaar();
-                notifyObservers();
+                notifyObservers(this);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

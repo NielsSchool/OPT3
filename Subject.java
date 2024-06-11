@@ -6,10 +6,9 @@ public abstract class Subject {
     public void addObserver(Observer observer) {
         observers.add(observer);
     }
-    //public void removeObserver(Observer observer) {
-    //    observers.remove(observer);
-    //}
-    public void notifyObservers() {
-
+    public void notifyObservers(Wasbeurt wasbeurt) {
+        for (Observer observer : observers) {
+            observer.update(wasbeurt);
+        }
     }
 }
