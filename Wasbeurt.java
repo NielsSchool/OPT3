@@ -75,8 +75,7 @@ public class Wasbeurt extends Subject {
                 e.printStackTrace();
             }
         }).start();
-    } //wat chatGPT hulp gehad om te kijken wanneer de notifyObserver aangeroepen moet worden. Was aan het proberen om mijn methode checkWachttijd te gebruiken maar het werd te ingewikkeld. ik begrijp wel wat er gebeurd in de code
-
+    }
     public void checkWasbeurtKlaar() throws InterruptedException {
         long delay = this.eindTijd.getTime() - System.currentTimeMillis();
         if (delay > 0) {

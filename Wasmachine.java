@@ -44,7 +44,10 @@ public abstract class Wasmachine {
     public Wasmachine startWasmachine(Wasprogramma wasprogramma) {
         if (this.beschikbaar) {
             this.cooldown = wasprogramma.getAantalMinuten();
+            voorWas();
             this.updateWasmachineStatus(false);
+            hoofdWas();
+            naWas();
             return this;
         } else {
             return null;
