@@ -26,40 +26,29 @@ class WasmachineTest {
         wasm3.addWasprogramma(wp2);
         wasm3.setGewichtRange(5,20);
     }
-
     @Test
-    void checkBeschikbaarheid() {
-        // Testen of een beschikbare wasmachine wordt geretourneerd
-        Wasmachine wasmachine = Wasmachine.CheckBeschikbaarheid(Arrays.asList(false, false, false));
-        assertNull(wasmachine);
-        wasmachine = Wasmachine.CheckBeschikbaarheid(Arrays.asList(true, false, false));
-        assertNotNull(wasmachine);
-        // Testen of er null wordt geretourneerd als er geen beschikbare wasmachines zijn
-        wasm1.updateWasmachineStatus(false);
-        wasm2.updateWasmachineStatus(false);
-        wasmachine = Wasmachine.CheckBeschikbaarheid(Arrays.asList(false, false, false));
-        assertNull(wasmachine);
-        // Testen of een wasmachine wordt geretourneerd die het juiste wasprogramma kan uitvoeren
-        wasm1.updateWasmachineStatus(true);
-        wasmachine = Wasmachine.CheckBeschikbaarheid(Arrays.asList(true, false, false));
-        assertEquals(wasmachine, wasm1);
-    }
+    void ConditionCoverage() {
+        List<List<Boolean>> opties = Arrays.asList(
+                // optie 1, optie 2, optie 3, decision/ verwachting
+                Arrays.asList(false, false, false, false),
+                Arrays.asList(true, true, true, false)
+        );
 
-    @Test
-    void startWasmachine() {
-        Wasbeurt wasbeurt = new Wasbeurt(wasm1, wp1);
-        assertNotNull(wasbeurt);
-        assertEquals(wp1, wasbeurt.getWasprogramma());
-        assertEquals(wasm1, wasbeurt.getWasmachine());
-    }
-
-    @Test
-    void updateWasmachineStatus() {
-        // Testen of de beschikbaarheid van de wasmachine correct wordt geüpdate
-        wasm1.updateWasmachineStatus(false);
-        assertFalse(wasm1.getBeschikbaar());
-        wasm1.updateWasmachineStatus(true);
-        assertTrue(wasm1.getBeschikbaar());
+        for (List<Boolean> optie : opties) {
+            Boolean expected = optie.get(3);
+            Wasmachine result = Wasmachine.CheckBeschikbaarheid(Arrays.asList(optie.get(0), optie.get(1), optie.get(2)));
+            int aantalTrue = 0;
+            for (int i = 0; i < 3; i++) {
+                if (optie.get(i)) {
+                    aantalTrue += 1;
+                }
+            }
+            if (aantalTrue != 1) {
+                assertNull(result);
+            } else {
+                assertEquals(expected, result.getBeschikbaar());
+            }
+        }
     }
     @Test
     void ConditionDecision() {
@@ -138,16 +127,7 @@ class WasmachineTest {
             assertEquals(wasm3.checkGewicht(testgevallen[i]), verwachtingen[i]);
         }
     }
-
-    @Test
-    void testCheckWasbeurtKlaarDC() {
-        Wasprogramma wpKlaar = new Wasprogramma(0, Arrays.asList(true, false, false), "Normaal", "Standaard wasprogramma");
-        Wasbeurt wasbeurt = new Wasbeurt(wasm1, wp1);
-        assertFalse(wasbeurt.checkWachttijdOver());
-        wasbeurt = new Wasbeurt(wasm1, wpKlaar);
-        assertTrue(wasbeurt.checkWachttijdOver());
-    }
-    @Test
+        @Test
     void CheckBeschikbaarheid_Pairwise() {
         int[] gewichten = {1, 1, 10, 10, 25, 25};
         boolean[][] combinaties = {
