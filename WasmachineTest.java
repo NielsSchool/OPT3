@@ -34,48 +34,20 @@ class WasmachineTest {
                 Arrays.asList(true, true, true, false)
         );
 
-        for (List<Boolean> optie : opties) {
-            Boolean expected = optie.get(3);
-            Wasmachine result = Wasmachine.CheckBeschikbaarheid(Arrays.asList(optie.get(0), optie.get(1), optie.get(2)));
-            int aantalTrue = 0;
-            for (int i = 0; i < 3; i++) {
-                if (optie.get(i)) {
-                    aantalTrue += 1;
-                }
-            }
-            if (aantalTrue != 1) {
-                assertNull(result);
-            } else {
-                assertEquals(expected, result.getBeschikbaar());
-            }
-        }
+        checkBeschikbaarheidOptionsExpectation(opties);
     }
     @Test
-    void ConditionDecision() {
+    void ConditionDecisionCoverage() {
         List<List<Boolean>> opties = Arrays.asList(
                 // optie 1, optie 2, optie 3, decision/ verwachting
                 Arrays.asList(true, false, false, true),
                 Arrays.asList(false, true, true, false)
         );
 
-        for (List<Boolean> optie : opties) {
-            Boolean expected = optie.get(3);
-            Wasmachine result = Wasmachine.CheckBeschikbaarheid(Arrays.asList(optie.get(0), optie.get(1), optie.get(2)));
-            int aantalTrue = 0;
-            for (int i = 0; i < 3; i++) {
-                if (optie.get(i)) {
-                    aantalTrue += 1;
-                }
-            }
-            if (aantalTrue != 1) {
-                assertNull(result);
-            } else {
-                assertEquals(expected, result.getBeschikbaar());
-            }
-        }
+        checkBeschikbaarheidOptionsExpectation(opties);
     }
     @Test
-    void checkbeschikbaarheidMCDC() {
+    void CheckbeschikbaarheidMCDC() {
         List<List<Boolean>> opties = Arrays.asList(
                 // optie 1, optie 2, optie 3, decision/ verwachting
                 Arrays.asList(true, false, false, true),
@@ -83,24 +55,8 @@ class WasmachineTest {
                 Arrays.asList(false, false, true, true),
                 Arrays.asList(false, false, false, false)
         );
-
-        for (List<Boolean> optie : opties) {
-            Boolean expected = optie.get(3);
-            Wasmachine result = Wasmachine.CheckBeschikbaarheid(Arrays.asList(optie.get(0), optie.get(1), optie.get(2)));
-            int aantalTrue = 0;
-            for (int i=0; i<3; i++) {
-                if (optie.get(i)) {
-                    aantalTrue += 1;
-                }
-            }
-            if (aantalTrue != 1) {
-                assertNull(result);
-            } else {
-            assertEquals(expected, result.getBeschikbaar());
-            }
-        }
+        checkBeschikbaarheidOptionsExpectation(opties);
     }
-
     @Test
     void CheckBeschikbaarheidMCC() {
         List<List<Boolean>> opties = Arrays.asList(
@@ -115,21 +71,7 @@ class WasmachineTest {
                 Arrays.asList(true, true, true, false)
         );
 
-        for (List<Boolean> optie : opties) {
-            Boolean expected = optie.get(3);
-            Wasmachine result = Wasmachine.CheckBeschikbaarheid(Arrays.asList(optie.get(0), optie.get(1), optie.get(2)));
-            int aantalTrue = 0;
-            for (int i=0; i<3; i++) {
-                if (optie.get(i)) {
-                    aantalTrue += 1;
-                }
-            }
-            if (aantalTrue != 1) {
-                assertNull(result);
-            } else {
-                assertEquals(expected, result.getBeschikbaar());
-            }
-        }
+        checkBeschikbaarheidOptionsExpectation(opties);
     }
 //equivalentieklasse
     @Test
@@ -187,6 +129,21 @@ class WasmachineTest {
         }
     }
 
-
-
+    void checkBeschikbaarheidOptionsExpectation(List<List<Boolean>> opties) {
+        for (List<Boolean> optie : opties) {
+            Boolean expected = optie.get(3);
+            Wasmachine result = Wasmachine.CheckBeschikbaarheid(Arrays.asList(optie.get(0), optie.get(1), optie.get(2)));
+            int aantalTrue = 0;
+            for (int i=0; i<3; i++) {
+                if (optie.get(i)) {
+                    aantalTrue += 1;
+                }
+            }
+            if (aantalTrue != 1) {
+                assertNull(result);
+            } else {
+                assertEquals(expected, result.getBeschikbaar());
+            }
+        }
+    }
 }

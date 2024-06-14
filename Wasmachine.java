@@ -4,7 +4,6 @@ import java.util.List;
 public abstract class Wasmachine {
     private int nr;
     private String locatie;
-    private String status;
     private boolean beschikbaar;
     private int cooldown;
     public static ArrayList<Wasmachine> Wasmachines = new ArrayList<Wasmachine>();
@@ -43,10 +42,11 @@ public abstract class Wasmachine {
 
     public Wasmachine startWasmachine(Wasprogramma wasprogramma) {
         if (this.beschikbaar) {
-            this.cooldown = wasprogramma.getAantalMinuten();
             voorWas();
+            this.cooldown = wasprogramma.getAantalMinuten();
             this.updateWasmachineStatus(false);
             hoofdWas();
+            //als nawas nodig is deze wel of niet implementeren? <-- mogelijke uitbreiding
             naWas();
             return this;
         } else {
